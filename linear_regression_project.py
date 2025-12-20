@@ -11,7 +11,7 @@ test_df = pd.read_csv("test.csv")
 x_test = test_df["X"].values
 y_test = test_df["y"].values
 
-degree = 1   
+degree = 3   
 
 # DESIGN MATRIX
 def design_matrix(x, degree):
