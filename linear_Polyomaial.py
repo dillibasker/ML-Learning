@@ -10,7 +10,6 @@ degree = 2              # 1 = linear, >1 = polynomial
 noise_std = 0.5         # noise level
 random_seed = 42
 
-
 np.random.seed(random_seed)
 
 # Generate input features
