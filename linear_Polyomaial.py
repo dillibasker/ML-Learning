@@ -3,11 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-
-n_samples = 80          # number of data points
-n_features = 2   
-degree = 2              # 1 = linear, >1 = polynomial
-noise_std = 0.5         # noise level
+n_samples = 80         
+n_features = 2
+degree = 2          
+noise_std = 0.5      
 random_seed = 42
 
 np.random.seed(random_seed)
@@ -15,7 +14,7 @@ np.random.seed(random_seed)
 # Generate input features
 X = np.random.uniform(-1, 1, size=(n_samples, n_features))
 
-# True weights (unknown in real world)
+# True weights
 true_w = np.random.randn(1 + n_features * degree)
 
 # Design matrix generator
@@ -26,7 +25,6 @@ def design_matrix_nd(X, degree):
     for d in range(1, degree + 1):
         for f in range(n_features):
             Phi = np.column_stack((Phi, X[:, f] ** d))
-
     return Phi
 
 # Generate output with noise
@@ -74,8 +72,6 @@ print("Train MSE:", train_mse)
 print("Train RMSE:", train_rmse)
 print("Test MSE:", test_mse)
 print("Test RMSE:", test_rmse)
-
-# VISUALIZATION 
 
 #  1D INPUT → 2D PLOT
 if n_features == 1:
