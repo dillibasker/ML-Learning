@@ -2,10 +2,12 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from itertools import combinations_with_replacement
+
 
 n_samples = 80         
 n_features = 2
-degree = 2          
+degree = 3          
 noise_std = 0.5      
 random_seed = 42
 
@@ -14,21 +16,27 @@ np.random.seed(random_seed)
 # Generate input features
 X = np.random.uniform(-1, 1, size=(n_samples, n_features))
 
-# True weights
-true_w = np.random.randn(1 + n_features * degree)
-
 # Design matrix generator
 def design_matrix_nd(X, degree):
     n_samples, n_features = X.shape
-    Phi = np.ones((n_samples, 1))  # bias
+    Phi = [np.ones(n_samples)]  # bias
 
     for d in range(1, degree + 1):
-        for f in range(n_features):
-            Phi = np.column_stack((Phi, X[:, f] ** d))
-    return Phi
+        for combo in combinations_with_replacement(range(n_features), d):
+            term = np.ones(n_samples)
+            for idx in combo:
+                term *= X[:, idx]
+            Phi.append(term)
+
+    return np.column_stack(Phi)
 
 # Generate output with noise
 Phi_true = design_matrix_nd(X, degree)
+
+#changed tru weight 
+true_w = np.random.randn(Phi_true.shape[1])
+
+
 y = Phi_true @ true_w + np.random.normal(0, noise_std, size=n_samples)
 
 # PANDAS DATAFRAME 
