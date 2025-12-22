@@ -6,9 +6,10 @@ from itertools import combinations_with_replacement
 
 n_samples = 80         
 n_features = 2
-degree = 3          
+degree = 2         
 noise_std = 0.5      
 random_seed = 42
+lambda_reg = 0.9
 
 np.random.seed(random_seed)
 
@@ -35,7 +36,6 @@ Phi_true = design_matrix_nd(X, degree)
 #changed tru weight 
 true_w = np.random.randn(Phi_true.shape[1])
 
-
 y = Phi_true @ true_w + np.random.normal(0, noise_std, size=n_samples)
 
 # PANDAS DATAFRAME 
@@ -55,7 +55,12 @@ y_test = test_df["y"].values
 
 #TRAINING 
 Phi_train = design_matrix_nd(X_train, degree)
-w = np.linalg.pinv(Phi_train) @ y_train
+I = np.eye(Phi_train.shape[1])
+I[0, 0] = 0   # bias is not regularized
+
+w = np.linalg.inv(
+    Phi_train.T @ Phi_train + lambda_reg * I
+) @ Phi_train.T @ y_train
 
 #PREDICTION 
 y_train_pred = Phi_train @ w
