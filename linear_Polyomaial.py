@@ -5,7 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 
 n_samples = 80          # number of data points
-n_features = 2    # CHANGE THIS: 1, 2, 3, 4...
+n_features = 2   
 degree = 2              # 1 = linear, >1 = polynomial
 noise_std = 0.5         # noise level
 random_seed = 42
