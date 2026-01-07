@@ -1,6 +1,6 @@
 # Ignore datasets
-projects/
-dataset/
+projects/dataset/
+
 
 # PyTorch cache
 __pycache__/
