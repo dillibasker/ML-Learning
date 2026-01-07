@@ -1,6 +1,6 @@
 # Ignore datasets
 projects/dataset/
-
+projects/xor_data
 
 # PyTorch cache
 __pycache__/
