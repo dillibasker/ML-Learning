@@ -1,7 +1,3 @@
-# ============================================================
-# MNIST – FULL DATASET, 20 EPOCHS, SAVE & LOAD MODEL
-# ============================================================
-
 import os
 import torch
 import torch.nn as nn
@@ -10,9 +6,7 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 
-# ============================================================
 # CONFIG
-# ============================================================
 MODEL_PATH = "mnist_cnn_full.pth"
 EPOCHS = 20
 BATCH_SIZE = 64
@@ -20,17 +14,13 @@ BATCH_SIZE = 64
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Device:", device)
 
-# ============================================================
 # TRANSFORM
-# ============================================================
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.1307,), (0.3081,))
 ])
 
-# ============================================================
 # DATASET (FULL MNIST)
-# ============================================================
 train_dataset = datasets.MNIST(
     root="./data",
     train=True,
@@ -51,9 +41,7 @@ test_loader = DataLoader(test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 print(f"Train samples: {len(train_dataset)}")
 print(f"Test samples : {len(test_dataset)}")
 
-# ============================================================
 # MODEL
-# ============================================================
 class MNIST_CNN(nn.Module):
     def __init__(self):
         super().__init__()
@@ -77,15 +65,11 @@ class MNIST_CNN(nn.Module):
 
 model = MNIST_CNN().to(device)
 
-# ============================================================
 # LOSS & OPTIMIZER
-# ============================================================
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-# ============================================================
 # TRAIN ONLY ONCE
-# ============================================================
 if not os.path.exists(MODEL_PATH):
     print("\nTraining started...\n")
 
@@ -113,9 +97,7 @@ else:
     model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
     print("\nModel loaded (No retraining) ✔\n")
 
-# ============================================================
 # TEST ACCURACY
-# ============================================================
 model.eval()
 correct = 0
 total = 0
@@ -130,9 +112,7 @@ with torch.no_grad():
 
 print(f"Test Accuracy: {100 * correct / total:.2f}%")
 
-# ============================================================
 # BEAUTIFUL OUTPUT – 10 CLASS VISUALIZATION
-# ============================================================
 shown = []
 images_list = []
 preds_list = []
