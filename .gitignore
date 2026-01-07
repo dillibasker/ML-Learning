@@ -1,0 +1,14 @@
+# Ignore datasets
+dron_bird_classification/
+dataset/
+
+# PyTorch cache
+__pycache__/
+*.pyc
+
+# Model files
+*.pth
+
+# Virtual env
+venv/
+.env
