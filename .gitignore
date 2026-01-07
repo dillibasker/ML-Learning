@@ -1,5 +1,5 @@
 # Ignore datasets
-dron_bird_classification/
+projects/
 dataset/
 
 # PyTorch cache
