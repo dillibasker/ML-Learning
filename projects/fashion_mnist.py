@@ -1,8 +1,4 @@
-# ============================================================
-# Fashion-MNIST Classification using CNN (PyTorch)
-# Epochs = 20 | Overall Accuracy > 90%
-# Custom split: 6000 train / 2000 test
-# ============================================================
+
 import os
 import torch
 import torch.nn as nn
@@ -12,16 +8,12 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader, Subset
 import matplotlib.pyplot as plt
 
-# ------------------------------------------------------------
 # 1. DEVICE CONFIGURATION
-# ------------------------------------------------------------
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Using device:", device)
 MODEL_PATH = "fashion_mnist_cnn.pth"
 
-# ------------------------------------------------------------
 # 2. CLASS NAMES (10 CLASSES)
-# ------------------------------------------------------------
 class_names = [
     'T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
     'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot'
@@ -29,17 +21,13 @@ class_names = [
 
 NUM_CLASSES = 10
 
-# ------------------------------------------------------------
 # 3. DATA TRANSFORMS
-# ------------------------------------------------------------
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.5,), (0.5,))
 ])
 
-# ------------------------------------------------------------
 # 4. LOAD FULL DATASET & TAKE FIRST 8000 SAMPLES
-# ------------------------------------------------------------
 full_dataset = torchvision.datasets.FashionMNIST(
     root='./data',
     train=True,
@@ -48,9 +36,8 @@ full_dataset = torchvision.datasets.FashionMNIST(
 )
 
 # Take first 8000 samples
-train_indices = list(range(6000))        # 0 to 5999 -> training
-test_indices = list(range(6000, 8000))   # 6000 to 7999 -> testing
-
+train_indices = list(range(6000))      
+test_indices = list(range(6000, 8000))  
 train_dataset = Subset(full_dataset, train_indices)
 test_dataset = Subset(full_dataset, test_indices)
 
@@ -60,9 +47,7 @@ test_loader = DataLoader(test_dataset, batch_size=64, shuffle=False)
 print("Training samples:", len(train_dataset))
 print("Testing samples :", len(test_dataset))
 
-# ------------------------------------------------------------
 # 6. CNN MODEL (HIGH ACCURACY)
-# ------------------------------------------------------------
 class StrongCNN(nn.Module):
     def __init__(self):
         super(StrongCNN, self).__init__()
@@ -98,25 +83,20 @@ class StrongCNN(nn.Module):
         return x
 
 model = StrongCNN().to(device)
-#print(model)
 
-# ------------------------------------------------------------
 # 7. LOSS FUNCTION & OPTIMIZER
-# ------------------------------------------------------------
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-# ------------------------------------------------------------
 # 8. TRAIN MODEL (EPOCH = 20)
-# ------------------------------------------------------------
 num_epochs = 20
 
 if os.path.exists(MODEL_PATH):
-    print("\n✅ Saved model found. Loading model...")
+    print("\nSaved model found. Loading model...")
     model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
     model.eval()
 else:
-    print("\n🚀 No saved model found. Training model...\n")
+    print("\nNo saved model found. Training model...\n")
 
     for epoch in range(num_epochs):
         model.train()
@@ -149,9 +129,7 @@ else:
     print(f"\n💾 Model saved as '{MODEL_PATH}'")
 
 
-# ------------------------------------------------------------
 # 9. OVERALL TEST ACCURACY
-# ------------------------------------------------------------
 model.eval()
 correct = 0
 total = 0
@@ -170,12 +148,9 @@ print("\n===================================")
 print(f"OVERALL TEST ACCURACY: {overall_accuracy:.2f}%")
 print("===================================\n")
 
-# ------------------------------------------------------------
-# 10. DISPLAY PREDICTION RESULTS
-# ------------------------------------------------------------
-# ------------------------------------------------------------
+# DISPLAY PREDICTION RESULTS
+
 # 10. DISPLAY RANDOM 5 TEST PREDICTIONS (AFTER TRAINING)
-# ------------------------------------------------------------
 import random
 
 model.eval()
