@@ -63,7 +63,7 @@ print("Final Predictions:")
 for i in range(len(X)):
     print(X[i], "Pred:", y_final[i][0], "Actual:", y[i][0])
 
-print(f"\n✅ Overall Accuracy: {accuracy:.2f}%")
+print(f"\nOverall Accuracy: {accuracy:.2f}%")
 
 # 6. FULL DECISION REGION PLOT
 
