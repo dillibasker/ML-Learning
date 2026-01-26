@@ -6,12 +6,12 @@ import matplotlib.pyplot as plt
 train_df = pd.read_csv("train_1b.csv")
 x_train = train_df["X"].values
 y_train = train_df["y"].values
-
+    
 test_df = pd.read_csv("test.csv")
 x_test = test_df["X"].values
 y_test = test_df["y"].values
 
-degree = 3   
+degree = 3
 
 # DESIGN MATRIX
 def design_matrix(x, degree):

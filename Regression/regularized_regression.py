@@ -6,7 +6,7 @@ from itertools import combinations_with_replacement
 
 n_samples = 80         
 n_features = 2
-degree = 2         
+degree = 2
 noise_std = 0.5      
 random_seed = 42
 lambda_reg = 0.9
